@@ -1,44 +1,61 @@
 import java.util.Scanner;
 
 public class FortuneTeller {
-
+	
 	public static void main(String[] args) {
 		
-		String firstName, lastName, roygbiv, modeOfTravel, vacationSpot;
-		int age, birthMonth, siblings, retirementAge, retirementBalance;
+		String firstName, lastName, roygbiv, modeOfTravel = null, vacationSpot, exit = "quit";
+		int age, retirementAge, retirementBalance, siblings;
 
 		Scanner input = new Scanner(System.in);
+	
 		
 		//Ask the user for the user’s first name.
 		System.out.println("Welcome to Midnite Owl's Fortune Teller Program!\n Please enter your first name: ");
 		firstName = input.nextLine();
+		if (firstName.contentEquals("quit")) {
+			System.out.println("Thanks for using my program");
+			System.exit(0);
+		}
 		
 		 //Ask the user for the user’s last name.
 		System.out.println("Please enter your last name: ");
 		lastName = input.nextLine();
-		
+		if (lastName.contentEquals("quit")) {
+			System.out.println("Thanks for using my program");
+			System.exit(0);
+		}
 		//Ask the user for the user’s age.
 		System.out.println("Please enter your age: ");
+		
 		age = input.nextInt();
+				
 		
 		//Ask the user for the user’s birth month (as an 'int').
 		System.out.println("Please enter your birth month \"e.g.: 8 = August\"");
-		birthMonth = input.nextInt();
-		if (birthMonth <=0 || birthMonth >= 12) {
-			retirementBalance = 0;
+		String birthMonth;
+		if (birthMonth.contentEquals("quit")) {
+			System.out.println("Thanks for using my program");
+			System.exit(0);
 		}
-		input.nextLine();
+		Integer.parseInt(birthMonth);
+		
+		//input.nextLine();
 		
 		//Ask the user for the user’s favorite ROYGBIV color.
 		System.out.println("Please enter your favorite ROYGBIV color: \nDon't know what an ROYGBIV color is? Type 'help'.");
+		
 		roygbiv = input.next().toLowerCase();
+		if (roygbiv.contentEquals("quit")) {
+			System.exit(0);
+		}
 
 		//If the user does not know what ROYGBIV is, ask the user to enter “Help” to get a list of the ROYGBIV colors.
-		if (roygbiv.contentEquals("help")) {
-			System.out.println("ROYGBIV is an acronym for the following colors: red, orange, yellow, green, blue, indigo and violet.\nPlease enter one of these colors: ");
-			roygbiv = input.next();
-		} else {
-			switch(roygbiv) {
+		 else if (roygbiv.contentEquals("help")) {
+			System.out.println("The ROYGBIV colors are red, orange, yellow, green, blue, indigo, violet. \nPlease enter your favorite ROYGBIV color; \n");
+			roygbiv = input.next().toLowerCase();
+		} 
+		switch(roygbiv) {
 			case "red":
 			case "orange":
 			case "yellow":
@@ -48,20 +65,23 @@ public class FortuneTeller {
 			case "violet":
 				break;
 			default:
-				input.close();
+				System.out.println("Not a color, goodbye.");
+				System.exit(0);
 			}
-		}
-
-		System.out.println("How many siblings do you have?");//Ask the user for the user's number of siblings.*/
-		siblings = input.nextInt();
 		
-		//Retirement Years
-		int retireEven = (birthMonth / age) * siblings;
-		int retireOdd = (siblings / age) * birthMonth;
+		//Ask the user for the user's number of siblings.
+		System.out.println("How many siblings do you have?");
+		siblings = input.nextInt();
+		if (Integer.toString(siblings).contains("quit")){
+			System.exit(0);
+		} 
+		
+		
+		//Retirement Age
 		if (age % 2 == 0) {
-		retirementAge = retireEven;
+			retirementAge = (birthMonth * age) / siblings;
 		} else {
-		retirementAge = retireOdd;
+			retirementAge = (siblings * age) / birthMonth;
 		}
 		
 		//Vacation Home Location
@@ -92,22 +112,27 @@ public class FortuneTeller {
 			vacationSpot = "That's a lot of siblings! You might want to consider a \"Stay-cation\"";
 		}
 		
-		if (roygbiv.contains("red")){
+		
+		switch(roygbiv) {
+		case "red": 
 			modeOfTravel = "Horse!";
-		}else if (roygbiv.contains("orange")) {
-			modeOfTravel = "Dune Buggy!";
-		}else if (roygbiv.contains("yellow")) {
+		case "orange": 
+			modeOfTravel = "DuneBuggy!";
+		case "yellow": 
 			modeOfTravel = "Skateboard!";
-		}else if (roygbiv.contains("green")) {
+		case "green": 
 			modeOfTravel = "Row Boat!";
-		}else if (roygbiv.contains("blue")) {
-			modeOfTravel = "Bycicle!";
-		}else if (roygbiv.contains("indigo")) {
-			modeOfTravel = "Seguay!";
-		}else {
-			modeOfTravel = "Foot!";
+		case "blue": 
+			modeOfTravel = "Bycicle";
+		case "indigo": 
+			modeOfTravel = "Seguay";
+		case "violet": 
+			modeOfTravel = "Hang Glider";
+			break;
+			default: System.out.println("Foot");
 		}
 		
+		//Retirement Balance
 		switch(birthMonth) {
 		case 1:
 		case 2:
@@ -132,11 +157,9 @@ public class FortuneTeller {
 		
 /*		Display the user's fortune in this format:
 		*[First Name]* *[Last Name]* will retire in *[# of years]* with *[bank balance]* in the bank,
-		a vacation home in *[location]*, and travel by *[mode of transporation]*.*/
+		a vacation home in *[location]*, and travel by *[mode of transportation]*.*/
 
-		System.out.println(firstName + " " + lastName + " will retire in " + retirementAge + " years with $" + retirementBalance + " in the bank, a vacation home in " + vacationSpot + ", and travel by " + modeOfTravel);
-		
-		
+		System.out.println(firstName + " " + lastName + " will retire in " + retirementAge + " years with $" + retirementBalance + " in the bank, a vacation home in " + vacationSpot + "\n and travel by " + modeOfTravel);
+			
 	}
-
 }
